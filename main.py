@@ -1,6 +1,8 @@
 import itertools
 import re
 
+import sys
+
 from utils import load_yaml
 
 REPLACE_REGEX = re.compile(r'{([^}]+)}')
@@ -26,8 +28,8 @@ def get_process(document, process_id):
     return next(process for process in document['processes'] if process['id'] == process_id)
 
 
-if __name__ == '__main__':
-    document = load_yaml('easy.yaml')
+def main():
+    document = load_yaml(sys.argv[1])
     # pretty_print(document)
 
     tasks_map = {}
@@ -77,3 +79,7 @@ if __name__ == '__main__':
             print('  - id: %s' % (task['id']))
             print('    command: %s' % (task['command']))
             print('    deps: %s' % (task.get('deps') or []))
+
+
+if __name__ == '__main__':
+    main()
